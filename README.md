@@ -23,7 +23,7 @@
     <li><strong>UI/UX Best Practices:</strong> User interface and user experience design principles are followed to create an intuitive and visually appealing interface, enhancing user engagement and satisfaction.</li>
     <li><strong>Code Splitting:</strong> Code splitting techniques are employed to optimize performance and reduce initial load times, ensuring a smooth user experience.</li>
     <li><strong>Error Handling:</strong> Frontend components include error handling mechanisms to gracefully handle unexpected errors and provide informative error messages to users.</li>
-    <li><strong>Testing:</strong> Unit tests and integration tests are implemented to ensure the reliability and stability of frontend components, following testing best practices.</li>
+    <li><strong>Testing:</strong> Unit tests tests are implemented to ensure the reliability and stability of frontend components, following testing best practices.</li>
 </ul>
 
 <h2>Bonus Features</h2>
