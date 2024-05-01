@@ -1,12 +1,11 @@
 package com.mpp.backend.Repository;
 
-import com.mpp.backend.Model.Character;
+import com.mpp.backend.Model.Genre;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 
-
 @Repository
-public interface CharacterRepository extends JpaRepository<Character, Long> {
+public interface GenreRepository extends JpaRepository<Genre, Long> {
 
 }

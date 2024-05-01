@@ -1,0 +1,100 @@
+package com.mpp.backend.Controllers;
+
+import com.mpp.backend.Model.Character;
+import com.mpp.backend.Model.Genre;
+import com.mpp.backend.Services.GenreService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@RequestMapping("/genres")
+public class GenreController {
+    @Autowired
+    GenreService genreService;
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping
+    public ResponseEntity<Genre> createGenre(@RequestBody Genre genre) {
+        try {
+            genre.setNumberOfCharacters(0);
+            genreService.addGenre(genre);
+            return new ResponseEntity<>(genre, HttpStatus.CREATED);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+//    @GetMapping
+//    public ResponseEntity<List<Genre>> getAllGenres() {
+//        return new ResponseEntity<>(genreService.getGenres(), HttpStatus.OK);
+//    }
+    @GetMapping
+    public ResponseEntity<List<Genre>> getAllCharacters(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int pageSize
+    ){
+        try {
+            Page<Genre> genresPage = genreService.getGenres(page, pageSize);
+            List<Genre> genres = genresPage.getContent();
+
+
+            return new ResponseEntity<>(genres, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Genre>> getAllGenres() {
+        return new ResponseEntity<>(genreService.getGenres(), HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/{id}")
+    public ResponseEntity<Genre> getGenreById(@PathVariable Long id) {
+        Genre genre = genreService.getGenreByID(id);
+        if (genre != null) {
+            return new ResponseEntity<>(genre, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PutMapping("/{id}")
+    public ResponseEntity<Genre> updateGenre(@PathVariable Long id,
+                                             @RequestBody Genre updatedGenre) {
+        Genre genre = genreService.getGenreByID(id);
+        if (genre != null) {
+            genre.setName(updatedGenre.getName());
+            genre.setTypicalTraits(updatedGenre.getTypicalTraits());
+            genre.setDescription(updatedGenre.getDescription());
+            genreService.addGenre(genre);
+            return new ResponseEntity<>(genre, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteGenre(@PathVariable Long id) {
+        Genre genre = genreService.getGenreByID(id);
+        if (genre != null) {
+            genreService.removeGenre(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+}

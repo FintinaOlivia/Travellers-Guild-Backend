@@ -1,6 +1,7 @@
 package com.mpp.backend.Tests;
 
 import com.mpp.backend.Model.Character;
+import com.mpp.backend.Model.Genre;
 import com.mpp.backend.Repository.CharacterRepository;
 import com.mpp.backend.Services.CharacterService;
 import jakarta.annotation.PostConstruct;
@@ -26,12 +27,15 @@ public class CharacterServiceTests {
 
     private List<Character> characters;
 
+    private Genre genre;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
         characters = new ArrayList<>();
-        characters.add(new Character(1L, "Character1", 20, "IconicLines1", "Creator1", "Description1"));
-        characters.add(new Character(2L, "Character2", 25, "IconicLinies2","Creator2", "Description2"));
+        genre = new Genre(1L, new ArrayList<>(),"Genre1", "Description1", 0, "Creator1");
+        characters.add(new Character(1L, "Character1", 20, "IconicLines1", "Creator1", 1, genre, "Description1"));
+        characters.add(new Character(2L, "Character2", 25, "IconicLinies2","Creator2", 1, genre,"Description2"));
         characterService.initializeCharacters();
 
     }
@@ -45,7 +49,7 @@ public class CharacterServiceTests {
         characterService.removeCharacter(characterToRemove);
 
         // Verify that the mock's removeCharacter method was called with the characterToRemove parameter
-        verify(characterRepository).removeCharacter(characterToRemove);
+        verify(characterRepository).delete(characterToRemove);
     }
 
     @Test
@@ -59,7 +63,7 @@ public class CharacterServiceTests {
 
     @Test
     void testNoDuplicateCharacters_NonExistingCharacter() {
-        Character nonExistingCharacter = new Character(3L, "Non Existing Character", 30, "New Iconic Lines", "New Creator", "New Description");
+        Character nonExistingCharacter = new Character(3L, "Non Existing Character", 30, "New Iconic Lines", "New Creator",1, genre, "New Description");
 
         boolean hasDuplicates = characterService.noDuplicateCharacters(nonExistingCharacter);
 
@@ -68,7 +72,7 @@ public class CharacterServiceTests {
 
     @Test
     void testValidateCharacter_ValidCharacter() {
-        Character validCharacter = new Character(3L, "New Character", 30, "New Iconic Lines", "New Creator", "New Description");
+        Character validCharacter = new Character(3L, "New Character", 30, "New Iconic Lines", "New Creator", 1, genre, "New Description");
 
         boolean isValid = characterService.validateCharacter(validCharacter);
 
