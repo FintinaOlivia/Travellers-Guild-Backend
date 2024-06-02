@@ -15,7 +15,8 @@
     <li><strong>Error Handling:</strong> Comprehensive error handling mechanisms are implemented to provide meaningful error messages and handle exceptions gracefully.</li>
    </ul>
 
-<h3>Frontend (React)</h3>
+<h3><h3><a href="https://github.com/FintinaOlivia/Travellers-Guild-Frontend">Frontend (React)</a></h3>
+</h3>
 <ul>
     <li><strong>Component-Based Architecture:</strong> The frontend is developed using React, following a component-based architecture. Each UI element is encapsulated within a reusable component, promoting code modularity and reusability.</li>
     <li><strong>State Management:</strong> State management is handled efficiently using Redux, ensuring predictable state behavior and efficient UI updates.</li>
