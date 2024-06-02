@@ -26,8 +26,8 @@ public class GenreService {
     @Autowired
     CharacterRepository characterRepository;
 
-    @PostConstruct
-    public void initializeGenres() {
+//    @PostConstruct
+//    public void initializeGenres() {
 //        for(Genre genre : genreRepository.findAll()){
 //            int numberOfCharacters = (int) characterRepository
 //                    .findAll()
@@ -41,7 +41,7 @@ public class GenreService {
 //            Genre genre = genreGenerator.generateGenre();
 //            addGenre(genre);
 //        }
-    }
+//    }
 
     public List<Genre> getGenres(){
         return genreRepository.findAll();
@@ -57,11 +57,11 @@ public class GenreService {
         return genreOptional.orElse(null);
     }
 
-    public void increaseNumberOfCharacters(Long genreID){
-        Genre genre = genreRepository.findById(genreID).get();
-        genre.setNumberOfCharacters(genre.getNumberOfCharacters() + 1);
-        genreRepository.save(genre);
-    }
+//    public void increaseNumberOfCharacters(Long genreID){
+//        Genre genre = genreRepository.findById(genreID).get();
+//        genre.setNumberOfCharacters(genre.getNumberOfCharacters() + 1);
+//        genreRepository.save(genre);
+//    }
 
     public void addGenre(Genre genre){
             genreRepository.save(genre);
@@ -71,6 +71,14 @@ public class GenreService {
         if(genreRepository.existsById(id)) {
             genreRepository.deleteById(id);
         }
+    }
+
+    public Integer countByGenreID(Long genreID){
+        return characterRepository.countByGenreID(genreID);
+    }
+
+    public List<String> findGenresByName(String name){
+        return genreRepository.findGenresByName(name);
     }
 
 }

@@ -2,6 +2,7 @@ package com.mpp.backend.Controllers;
 
 import com.mpp.backend.Model.Character;
 import com.mpp.backend.Model.Genre;
+import com.mpp.backend.Repository.CharacterRepository;
 import com.mpp.backend.Services.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,11 +22,12 @@ public class GenreController {
     @Autowired
     GenreService genreService;
 
+
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
     public ResponseEntity<Genre> createGenre(@RequestBody Genre genre) {
         try {
-            genre.setNumberOfCharacters(0);
+//            genre.setNumberOfCharacters(0);
             genreService.addGenre(genre);
             return new ResponseEntity<>(genre, HttpStatus.CREATED);
         } catch (Exception ex) {
@@ -37,13 +40,18 @@ public class GenreController {
 //        return new ResponseEntity<>(genreService.getGenres(), HttpStatus.OK);
 //    }
     @GetMapping
-    public ResponseEntity<List<Genre>> getAllCharacters(
+    public ResponseEntity<List<Genre>> getAllGenres(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int pageSize
     ){
         try {
             Page<Genre> genresPage = genreService.getGenres(page, pageSize);
             List<Genre> genres = genresPage.getContent();
+
+            for (Genre genre : genres) {
+                genre.setNumberOfCharacters(genreService.countByGenreID(genre.getGenreID()));
+                genreService.addGenre(genre);
+            }
 
 
             return new ResponseEntity<>(genres, HttpStatus.OK);
@@ -52,17 +60,39 @@ public class GenreController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<List<Genre>> getAllGenres() {
-        return new ResponseEntity<>(genreService.getGenres(), HttpStatus.OK);
-    }
-
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/{id}")
     public ResponseEntity<Genre> getGenreById(@PathVariable Long id) {
         Genre genre = genreService.getGenreByID(id);
         if (genre != null) {
+            genre.setNumberOfCharacters(genreService.countByGenreID(genre.getGenreID()));
+            genreService.addGenre(genre);
             return new ResponseEntity<>(genre, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/name/{name}")
+    public ResponseEntity<List<String>> getGenreByName(@PathVariable String name) {
+        List<String> genres = genreService.findGenresByName(name);
+
+        if (!genres.isEmpty()) {
+            return new ResponseEntity<>(genres, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/count/{id}")
+    public ResponseEntity<Map<String, Integer>> getNumberOfCharacters(@PathVariable Long id) {
+        Genre genre = genreService.getGenreByID(id);
+        if (genre != null) {
+            Map<String, Integer> response = new HashMap<>();
+            response.put("numberOfCharacters", genreService.countByGenreID(id));
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

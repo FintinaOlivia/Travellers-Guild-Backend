@@ -43,7 +43,7 @@ public class CharacterControllerTests{
     @Test
     void testCreateCharacter() throws Exception {
         Character character = new Character();
-        character.setGenreID(1);
+        character.setGenreID(1L);
         character.setCharacterName("TestCharacter");
         when(characterService.validateCharacter(any())).thenReturn(true);
         when(characterService.noDuplicateCharacters(any())).thenReturn(false);
@@ -55,7 +55,7 @@ public class CharacterControllerTests{
     void testCreateCharacter_InvalidCharacter() throws Exception {
         Character character = new Character();
         character.setCharacterName("TestCharacter");
-        character.setGenreID(1);
+        character.setGenreID(1L);
         when(characterService.validateCharacter(any())).thenReturn(false);
         try{
             characterController.createCharacter(character);
@@ -103,13 +103,13 @@ public class CharacterControllerTests{
         Long existingId = 1L;
         Character existingCharacter = new Character();
         existingCharacter.setId(existingId);
-        existingCharacter.setGenreID(1);
+        existingCharacter.setGenreID(1L);
 
         when(characterService.findCharacterById(existingId)).thenReturn(existingCharacter);
 
         Character updatedCharacter = new Character();
         updatedCharacter.setId(existingId);
-        updatedCharacter.setGenreID(1);
+        updatedCharacter.setGenreID(1L);
         updatedCharacter.setCharacterName("Updated Name");
 
         ResponseEntity<Character> response = characterController.updateCharacter(existingId, updatedCharacter);

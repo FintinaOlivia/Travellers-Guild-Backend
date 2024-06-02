@@ -30,7 +30,7 @@ public class Character {
     private String creator;
 
     @Column(name = "genre_id")
-    private Integer genreID;
+    private Long genreID;
 
     @ManyToOne
     @JoinColumn(name = "genre")

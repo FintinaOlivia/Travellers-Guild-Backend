@@ -31,14 +31,14 @@ public class CharacterService {
     WebSocketController webSocketController;
 
 
-    @PostConstruct
-    public void initializeCharacters() {
+//    @PostConstruct
+//    public void initializeCharacters() {
 //        for(int i = 0; i < 3000; i++){
 //            Character character = characterGenerator.generateCharacter();
 //            addCharacter(character);
 //        }
 //        generateAndSendCharacterEveryKSeconds(2);
-    }
+//    }
 
     public void generateAndSendCharacterEveryKSeconds(int k){
         Timer timer = new Timer();
@@ -78,6 +78,10 @@ public class CharacterService {
 
     public void removeCharacter(Character character){
         characterRepository.delete(character);
+    }
+
+    public List<Character> getCharactersByName(String name){
+        return characterRepository.findCharactersByName(name);
     }
 
     private static boolean noNullFields(Character character){

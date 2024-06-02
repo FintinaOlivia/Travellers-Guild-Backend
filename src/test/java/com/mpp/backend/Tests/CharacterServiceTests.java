@@ -34,9 +34,9 @@ public class CharacterServiceTests {
         MockitoAnnotations.initMocks(this);
         characters = new ArrayList<>();
         genre = new Genre(1L, new ArrayList<>(),"Genre1", "Description1", 0, "Creator1");
-        characters.add(new Character(1L, "Character1", 20, "IconicLines1", "Creator1", 1, genre, "Description1"));
-        characters.add(new Character(2L, "Character2", 25, "IconicLinies2","Creator2", 1, genre,"Description2"));
-        characterService.initializeCharacters();
+        characters.add(new Character(1L, "Character1", 20, "IconicLines1", "Creator1", 1L, genre, "Description1"));
+        characters.add(new Character(2L, "Character2", 25, "IconicLinies2","Creator2", 1L, genre,"Description2"));
+//        characterService.initializeCharacters();
 
     }
 
@@ -63,7 +63,7 @@ public class CharacterServiceTests {
 
     @Test
     void testNoDuplicateCharacters_NonExistingCharacter() {
-        Character nonExistingCharacter = new Character(3L, "Non Existing Character", 30, "New Iconic Lines", "New Creator",1, genre, "New Description");
+        Character nonExistingCharacter = new Character(3L, "Non Existing Character", 30, "New Iconic Lines", "New Creator",1L, genre, "New Description");
 
         boolean hasDuplicates = characterService.noDuplicateCharacters(nonExistingCharacter);
 
@@ -72,7 +72,7 @@ public class CharacterServiceTests {
 
     @Test
     void testValidateCharacter_ValidCharacter() {
-        Character validCharacter = new Character(3L, "New Character", 30, "New Iconic Lines", "New Creator", 1, genre, "New Description");
+        Character validCharacter = new Character(3L, "New Character", 30, "New Iconic Lines", "New Creator", 1L, genre, "New Description");
 
         boolean isValid = characterService.validateCharacter(validCharacter);
 

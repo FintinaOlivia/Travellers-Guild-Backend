@@ -1,9 +1,8 @@
 package com.mpp.backend.Model.DataFaker;
 
 import com.github.javafaker.Faker;
-import com.mpp.backend.Model.Genre;
 import org.springframework.stereotype.Component;
-
+import com.mpp.backend.Model.Genre;
 import java.util.ArrayList;
 import java.util.List;
 @Component
@@ -14,7 +13,7 @@ public class GenreGenerator {
             Genre genre = new Genre();
             genre.setName("Genre " + i);
             genre.setTypicalTraits("Typical Traits " + i);
-            genre.setNumberOfCharacters(0);
+//            genre.setNumberOfCharacters(0);
             genre.setDescription("Description " + i);
             genres.add(genre);
         }
@@ -26,7 +25,7 @@ public class GenreGenerator {
         Genre genre = new Genre();
         genre.setName(faker.book().genre() + " " + faker.number().numberBetween(1, 100));
         genre.setTypicalTraits("Typical Traits");
-        genre.setNumberOfCharacters(0);
+//        genre.setNumberOfCharacters(0);
         genre.setDescription("Description");
         return genre;
     }

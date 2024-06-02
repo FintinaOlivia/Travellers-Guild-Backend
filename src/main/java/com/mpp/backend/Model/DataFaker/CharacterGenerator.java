@@ -42,12 +42,11 @@ public class CharacterGenerator {
             character.setAge(faker.number().numberBetween(1, 100));
             character.setIconicLines(faker.harryPotter().quote());
             character.setCreator(authors.get(random.nextInt(authors.size())));
-            character.setGenreID(random.nextInt(genreRepository.findAll().size()));
+            character.setGenreID(random.nextLong(genreRepository.findAll().size()));
 
             Genre genre = genreRepository.findById(
                     (long) character.getGenreID()).get();
             character.setGenre(genre);
-            genre.setNumberOfCharacters(genre.getNumberOfCharacters() + 1);
             genreRepository.save(genre);
 
             character.setDescription(faker.lorem().sentence());
@@ -66,7 +65,7 @@ public class CharacterGenerator {
 //        character.setCreator(authors.get(random.nextInt(authors.size())));
         character.setCreator("Creator of " + character.getCharacterName());
 //        character.setGenreID(random.nextInt(1,genreRepository.findAll().size()));
-        character.setGenreID(random.nextInt(1, 100000));
+        character.setGenreID(random.nextLong(1, 100000));
 
 //        Optional<Genre> genreOptional = genreRepository.findById((long) character.getGenreID());
 //        if (genreOptional.isPresent()) {
