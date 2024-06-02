@@ -1,4 +1,4 @@
-<h1>Media Character Analysis App [ONGOING PROJECT]</h1>
+<h1>Traveller's Guild [ONGOING PROJECT]</h1>
 
 <p>Hi! This is a pretty ambitious project that is still in the making, with the aim of helping the user with the self-reflection in terms of relating to fictional characters and interacting with fictional content.</p>
 <p>The intention is for the user to input the media they are currently consuming, to note their favourite characters and their traits, and then analyse the data provided.</p>
