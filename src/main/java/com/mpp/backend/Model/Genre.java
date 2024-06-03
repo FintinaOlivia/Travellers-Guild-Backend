@@ -33,4 +33,7 @@ public class Genre {
     public int numberOfCharacters;
 
     public String description;
+
+    @Column(name = "adder_username")
+    private String adderUsername;
 }

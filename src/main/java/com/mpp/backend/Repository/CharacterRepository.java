@@ -14,4 +14,7 @@ public interface CharacterRepository extends JpaRepository<Character, Long> {
     List<Character> findCharactersByName(String characterName);
     @Query("SELECT COUNT(c) FROM Character c WHERE c.genreID = :genreID")
     Integer countByGenreID(Long genreID);
+
+    @Query("SELECT c FROM Character c WHERE c.adderUsername = :username")
+    List<Character> findCharactersByUser(String username);
 }

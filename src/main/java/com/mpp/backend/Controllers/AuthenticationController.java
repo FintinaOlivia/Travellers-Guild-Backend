@@ -58,6 +58,7 @@ public class AuthenticationController {
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String token = jwtGenerator.generateToken(authentication);
+            System.out.println("validadate: " + jwtGenerator.validateToken(token));
             return new ResponseEntity<>(new AuthenticationResponseDTO(token), HttpStatus.OK);
         } catch (BadCredentialsException e) {
             return new ResponseEntity<>(new AuthenticationResponseDTO("Invalid token!"), HttpStatus.BAD_REQUEST);

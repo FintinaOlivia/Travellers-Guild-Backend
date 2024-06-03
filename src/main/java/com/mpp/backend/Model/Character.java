@@ -39,4 +39,7 @@ public class Character {
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+
+    @Column(name = "adder_username")
+    private String adderUsername;
 }

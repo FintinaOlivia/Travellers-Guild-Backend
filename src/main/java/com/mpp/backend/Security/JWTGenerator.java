@@ -8,10 +8,14 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import static com.mpp.backend.Security.Utils.Constants.JWT_EXPIRATION_TIME;
 import static com.mpp.backend.Security.Utils.Constants.JWT_SECRET;
@@ -23,8 +27,15 @@ public class JWTGenerator {
         Date currentTime = new Date();
         Date expirationTime = new Date(currentTime.getTime() + JWT_EXPIRATION_TIME);
 
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        List<String> roles = new ArrayList<>();
+        for (GrantedAuthority authority : authorities) {
+            roles.add(authority.getAuthority());
+        }
+
         String token = Jwts.builder()
                 .setSubject(username)
+                .claim("role", roles)
                 .setIssuedAt(currentTime)
                 .setExpiration(expirationTime)
                 .signWith(SignatureAlgorithm.HS256, JWT_SECRET)
@@ -49,6 +60,7 @@ public class JWTGenerator {
     }
 
     public boolean validateToken(String token) {
+        System.out.println("Token: " + token);
         try {
             Jwts.parserBuilder()
                     .setSigningKey(getSigningKey())

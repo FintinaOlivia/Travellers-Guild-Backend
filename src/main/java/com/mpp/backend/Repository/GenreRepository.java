@@ -13,4 +13,6 @@ public interface GenreRepository extends JpaRepository<Genre, Long> {
     @Query("SELECT g.name FROM Genre g WHERE g.name LIKE %:name%")
     List<String> findGenresByName(String name);
 
+    @Query("SELECT g FROM Genre g WHERE g.adderUsername = :username")
+    List<Genre> findGenresByUsername(String username);
 }

@@ -57,11 +57,9 @@ public class GenreService {
         return genreOptional.orElse(null);
     }
 
-//    public void increaseNumberOfCharacters(Long genreID){
-//        Genre genre = genreRepository.findById(genreID).get();
-//        genre.setNumberOfCharacters(genre.getNumberOfCharacters() + 1);
-//        genreRepository.save(genre);
-//    }
+    public List<Genre> getGenresByUsername(String username){
+        return genreRepository.findGenresByUsername(username);
+    }
 
     public void addGenre(Genre genre){
             genreRepository.save(genre);

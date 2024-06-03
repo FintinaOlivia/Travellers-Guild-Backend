@@ -27,7 +27,6 @@ public class GenreController {
     @PostMapping
     public ResponseEntity<Genre> createGenre(@RequestBody Genre genre) {
         try {
-//            genre.setNumberOfCharacters(0);
             genreService.addGenre(genre);
             return new ResponseEntity<>(genre, HttpStatus.CREATED);
         } catch (Exception ex) {
@@ -35,10 +34,6 @@ public class GenreController {
         }
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<Genre>> getAllGenres() {
-//        return new ResponseEntity<>(genreService.getGenres(), HttpStatus.OK);
-//    }
     @GetMapping
     public ResponseEntity<List<Genre>> getAllGenres(
             @RequestParam(defaultValue = "1") int page,
@@ -79,6 +74,17 @@ public class GenreController {
         List<String> genres = genreService.findGenresByName(name);
 
         if (!genres.isEmpty()) {
+            return new ResponseEntity<>(genres, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/user/{username}")
+    public ResponseEntity<List<Genre>> getGenresByUser(@PathVariable String username) {
+        List<Genre> genres = genreService.getGenresByUsername(username);
+        if (genres != null) {
             return new ResponseEntity<>(genres, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

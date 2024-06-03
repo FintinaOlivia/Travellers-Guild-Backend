@@ -84,6 +84,10 @@ public class CharacterService {
         return characterRepository.findCharactersByName(name);
     }
 
+    public List<Character> getCharactersByUser(String username){
+        return characterRepository.findCharactersByUser(username);
+    }
+
     private static boolean noNullFields(Character character){
         return character.getCharacterName() != null &&
                 character.getId() != null &&

@@ -38,25 +38,17 @@ public class CharacterController {
                 newCharacter.setGenreID(character.getGenreID());
                 newCharacter.setGenre(character.getGenre());
                 newCharacter.setDescription(character.getDescription());
+                newCharacter.setAdderUsername(character.getAdderUsername());
 
-//                genreService.increaseNumberOfCharacters(newCharacter.getGenreID().longValue());
 
                 characterService.addCharacter(newCharacter);
                 return new ResponseEntity<>(character, HttpStatus.CREATED);
-//            } else {
-//                throw new Exception("Invalid Operation!");
-//            }
 
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }
     }
 
-    // Endpoint to retrieve all Characters
-//    @GetMapping
-//    public ResponseEntity<List<Character>> getAllCharacters() {
-//        return new ResponseEntity<>(characterService.getCharacters(), HttpStatus.OK);
-//    }
     @GetMapping
     public ResponseEntity<List<Character>> getAllCharacters(
             @RequestParam(defaultValue = "1") int page,
@@ -78,6 +70,17 @@ public class CharacterController {
         Character Character = characterService.findCharacterById(id);
         if (Character != null) {
             return new ResponseEntity<>(Character, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/user/{username}")
+    public ResponseEntity<List<Character>> getCharactersByUser(@PathVariable String username) {
+        List<Character> characters = characterService.getCharactersByUser(username);
+        if (characters != null) {
+            return new ResponseEntity<>(characters, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -109,7 +112,6 @@ public class CharacterController {
                 character.setGenreID(updatedCharacter.getGenreID());
                 character.setDescription(updatedCharacter.getDescription());
 
-//                genreService.increaseNumberOfCharacters(character.getGenreID().longValue());
                 characterService.addCharacter(character);
                 return new ResponseEntity<>(character, HttpStatus.OK);
             } else {
