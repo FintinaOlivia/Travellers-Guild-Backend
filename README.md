@@ -13,7 +13,8 @@
     <li><strong>RESTful API:</strong> The backend provides a robust and scalable RESTful API for managing characters and accessing analysis data.</li>
     <li><strong>Data Validation:</strong> Input data is validated using Spring's validation framework to ensure data integrity and security.</li>
     <li><strong>Error Handling:</strong> Comprehensive error handling mechanisms are implemented to provide meaningful error messages and handle exceptions gracefully.</li>
-   </ul>
+   <li><strong>Authentication:</strong> Authentication and session management are implemented using JWT, currently featuring 'ADMIN' and 'USER' in terms of authority isolation.
+</ul>
 
 <h3><h3><a href="https://github.com/FintinaOlivia/Travellers-Guild-Frontend">Frontend (React)</a></h3>
 </h3>
