@@ -61,5 +61,5 @@ jobs:
         with:
           app-name: 'travellers-guild'
           slot-name: 'Production'
-          package: '*.war'
+          package: '*.jar'
           
