@@ -2,6 +2,7 @@ package com.mpp.backend.Tests;
 
 import com.mpp.backend.Model.Character;
 import com.mpp.backend.Model.Genre;
+import com.mpp.backend.Model.UserEntity;
 import com.mpp.backend.Repository.CharacterRepository;
 import com.mpp.backend.Services.CharacterService;
 import jakarta.annotation.PostConstruct;
@@ -29,13 +30,17 @@ public class CharacterServiceTests {
 
     private Genre genre;
 
+    private UserEntity user;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
         characters = new ArrayList<>();
-        genre = new Genre(1L, new ArrayList<>(),"Genre1", "Description1", 0, "Creator1");
-        characters.add(new Character(1L, "Character1", 20, "IconicLines1", "Creator1", 1L, genre, "Description1"));
-        characters.add(new Character(2L, "Character2", 25, "IconicLinies2","Creator2", 1L, genre,"Description2"));
+        user = new UserEntity();
+        user.setUsername("User1");
+        genre = new Genre(1L, new ArrayList<>(),"Genre1", "Description1", 0, "Creator1","User1");
+        characters.add(new Character(1L, "Character1", 20, "IconicLines1", "Creator1", 1L, genre, "Description1","User1"));
+        characters.add(new Character(2L, "Character2", 25, "IconicLinies2","Creator2", 1L, genre,"Description2","User1"));
 //        characterService.initializeCharacters();
 
     }
@@ -63,7 +68,7 @@ public class CharacterServiceTests {
 
     @Test
     void testNoDuplicateCharacters_NonExistingCharacter() {
-        Character nonExistingCharacter = new Character(3L, "Non Existing Character", 30, "New Iconic Lines", "New Creator",1L, genre, "New Description");
+        Character nonExistingCharacter = new Character(3L, "Non Existing Character", 30, "New Iconic Lines", "New Creator",1L, genre, "New Description","User1");
 
         boolean hasDuplicates = characterService.noDuplicateCharacters(nonExistingCharacter);
 
@@ -72,7 +77,7 @@ public class CharacterServiceTests {
 
     @Test
     void testValidateCharacter_ValidCharacter() {
-        Character validCharacter = new Character(3L, "New Character", 30, "New Iconic Lines", "New Creator", 1L, genre, "New Description");
+        Character validCharacter = new Character(3L, "New Character", 30, "New Iconic Lines", "New Creator", 1L, genre, "New Description","User1");
 
         boolean isValid = characterService.validateCharacter(validCharacter);
 

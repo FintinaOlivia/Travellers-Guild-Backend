@@ -28,15 +28,6 @@ public class GenreService {
 
 //    @PostConstruct
 //    public void initializeGenres() {
-//        for(Genre genre : genreRepository.findAll()){
-//            int numberOfCharacters = (int) characterRepository
-//                    .findAll()
-//                    .stream()
-//                            .filter(character -> character.getGenreID().longValue() == genre.getGenreID())
-//                                    .count();
-//            genre.setNumberOfCharacters(numberOfCharacters);
-//            genreRepository.save(genre);
-//        }
 //        for(int i = 0; i < 40000; i++){
 //            Genre genre = genreGenerator.generateGenre();
 //            addGenre(genre);

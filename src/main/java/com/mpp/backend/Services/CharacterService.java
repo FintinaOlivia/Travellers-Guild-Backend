@@ -31,14 +31,14 @@ public class CharacterService {
     WebSocketController webSocketController;
 
 
-//    @PostConstruct
-//    public void initializeCharacters() {
-//        for(int i = 0; i < 3000; i++){
+    @PostConstruct
+    public void initializeCharacters() {
+//        for(int i = 0; i < 300; i++){
 //            Character character = characterGenerator.generateCharacter();
 //            addCharacter(character);
 //        }
 //        generateAndSendCharacterEveryKSeconds(2);
-//    }
+    }
 
     public void generateAndSendCharacterEveryKSeconds(int k){
         Timer timer = new Timer();
@@ -47,11 +47,10 @@ public class CharacterService {
             public void run() {
                 Character character = characterGenerator.generateCharacter();
 
-//                if (validateCharacter(character)) {
                     characterRepository.save(character);
                     webSocketController.broadcast(character.getCharacterName() + " has been added!");
                     webSocketController.newCharacter(character.getCharacterName() + " has been added to the list!");
-//                }
+
                 System.out.println("Character list size: " + characterRepository.findAll().size());
             }
         }, 0, 2 * 1000L); // k seconds interval
